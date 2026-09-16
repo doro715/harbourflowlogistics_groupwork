@@ -11,5 +11,23 @@ def main():
     pass
 
 
-if __name__ == "__main__":
-    main()
+#validate a booking reference
+def validate_ref(reference):
+
+    reference = input("Enter booking reference: ")
+    result_cleaned = reference.strip().upper()
+    if len(result_cleaned) != 12:
+        return ""
+    if result_cleaned[3] != "-" or result_cleaned[7] != "-":
+        return ""
+    prefix = result_cleaned[0:3]
+    customer_code = result_cleaned[4:7]
+    shipment_number = result_cleaned[8:12]
+    if prefix != "HFL":
+        return "Please enter a valid booking reference (HFL-XXX-YYYY)."
+    if len(customer_code) != 3 or not customer_code.isalpha():
+        return "Please enter a valid customer code (3 letters)."
+    if len(shipment_number) != 4 or not shipment_number.isdigit():
+        return "Please enter a valid shipment number (4 digits)."
+    
+    return result_cleaned
