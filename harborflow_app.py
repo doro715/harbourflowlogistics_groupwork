@@ -56,4 +56,20 @@ def calculate_quote(weight, distance, service_code):
 
     return service_quote
     
-    
+#task 4 consolidate parcel labels
+def consolidate_labels(scanned_labels):
+    raw_labels = scanned_labels.split(",")
+    cleaned_labels = []
+    for label in raw_labels:
+        cleaned_label = label.strip().upper()
+        if cleaned_label:
+            cleaned_labels.append(cleaned_label)
+    return cleaned_labels
+
+def print_labels(cleaned_labels):
+    print("Unique Parcel Labels:")
+    count = 0
+    for label in cleaned_labels:
+        count += 1
+        print(f"{count}. {label}")     
+        print(f"Total unique parcels: {len(cleaned_labels)}")
