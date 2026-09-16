@@ -11,7 +11,7 @@ def main():
     pass
 
 
-#validate a booking reference
+#task2: validate a booking reference
 def validate_ref(reference):
 
     reference = input("Enter booking reference: ")
@@ -31,3 +31,29 @@ def validate_ref(reference):
         return "Please enter a valid shipment number (4 digits)."
     
     return result_cleaned
+#task3: calculate a delivery quote
+def calculate_quote(weight, distance, service_code):
+    if weight <= 0 or distance <= 0:
+        return "Weight and distance must be positive numbers."
+    if service_code == "S" or service_code == "Standard":
+        service_multiplier = 1.00
+    elif service_code == "X" or service_code == "Express":
+        service_multiplier = 1.25
+    elif service_code == "P" or service_code == "Priority":
+        service_multiplier = 1.60
+    else:
+        return "Invalid service code. Please choose 'S', 'X', or 'P' or 'Standard', 'Express', or 'Priority'."
+    base_charge = 45.00
+    weight_rate = 4.50 * weight
+    distance_rate = 6.50 * distance
+
+    delivery_quote = base_charge + weight_rate + distance_rate
+    service_quote = delivery_quote * service_multiplier
+    print(f"Distance(km): {distance}")
+    print(f"Weight(kg): {weight}")
+    print(f"Service code: {service_code}")
+    print(f"Delivery quote: ${service_quote:.2f}")
+
+    return service_quote
+    
+    
