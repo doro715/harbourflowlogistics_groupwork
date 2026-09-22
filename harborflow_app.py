@@ -6,8 +6,96 @@ entry point so the file can be run with: python harborflow_app.py
 
 
 def main():
-    """Run the HarborFlow Dispatch Console."""
+       """Run the HarborFlow Dispatch Console."""
     # TODO: implement the persistent menu and dispatch to task functions.
+
+    menychoice = "0"
+    van_capacity_str = "0"
+    van_capacity_int = 0
+    remaining_capacity = 0
+    parcel_weight_str = "0"
+    parcel_weights_list = []
+    accepted_parcels = 0
+   
+    print("HARBORFLOW DISPATCH CONSOLE")
+    print("1. Close console")
+    print("2. Validate booking reference")
+    print("3. Calculate delivery quote")
+    print("4. Consolidate parcel labels")
+    print("5. Check van capacity")
+    print("6. Classify service performance")
+    print("7. Produce weekly dispatch report")
+
+    while menychoice != "1":
+
+     menychoice = input("Select service: ")
+
+     if menychoice == "1":
+        print("Console closed. Dispatch data remains safe.")
+        break
+     
+     elif menychoice == "2":
+        """Task 2"""
+
+     elif menychoice == "3":
+        """Task 3"""         
+
+
+     elif menychoice == "4":
+        """Task 4"""
+
+     elif menychoice == "5":
+
+        van_capacity_int = 0
+
+        while van_capacity_int <= 0:
+         van_capacity_str = input("Plesse enter the van capacity (kg): ")
+         if van_capacity_str.isnumeric() == True:
+            van_capacity_int = int(van_capacity_str)
+         else:
+          print("Error - Value must be a possitve integer")
+         if van_capacity_int <= 0:
+            print("Error - Value must be greater than zero.")
+
+        #
+        while parcel_weight_str != "run":
+           parcel_weight_str = input("Please add a parcel (kg) or type 'run' to run the program: ")
+           if parcel_weight_str.isnumeric() == True:
+              if int(parcel_weight_str) > 0:
+               parcel_weights_list.append(int(parcel_weight_str))
+              else:
+                 print("Error - Value must be greater than zero or type run to 'run' the program")
+
+        print(f"Van capacity (kg): {van_capacity_int}")
+        remaining_capacity = van_capacity_int
+        temp_range = len(parcel_weights_list)
+        print(remaining_capacity)
+
+        #Calculates the remaing capacity by going through the list of weights and subtracting the values
+        # that are lower than the remaining capacity from the capacity
+        for i in range(0, temp_range):
+           if remaining_capacity - parcel_weights_list[i] >= 0:  
+              remaining_capacity = remaining_capacity - parcel_weights_list[i]            
+              accepted_parcels += 1
+              print(f"Parcel {i+1}: Accepted")
+           else:
+              print(f"Parcel {i+1}: Rejected")
+
+        print(f"Accepted pracels: {accepted_parcels}")
+        print(f"Loaded weight: {van_capacity_int - remaining_capacity} kg")
+        print(f"Remaining capacity: {remaining_capacity} kg")
+        parcel_weights_list.clear() #"temporary" solution for running it multiple times without closing the program
+
+     elif menychoice == "6":
+        """Task 6"""
+
+     elif menychoice == "7":
+        """Task 7"""
+
+     elif menychoice == "8":
+        """Task 8"""
+     else:
+       print("Error - Select a service from 1 to 8.")
     pass
 
 
