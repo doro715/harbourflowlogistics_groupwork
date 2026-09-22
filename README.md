@@ -8,8 +8,8 @@ Python version tested:
 
 Team members and concrete contributions
 ---------------------------------------
-Name:
-Contribution:
+Name: Erik Benjegård
+Contribution: Meny and and task 5
 
 Name:
 Contribution:
