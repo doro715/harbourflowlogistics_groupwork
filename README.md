@@ -11,14 +11,12 @@ Team members and concrete contributions
 Name: Erik Benjegård
 Contribution: Meny and and task 5
 
-Name:
-Contribution:
+Name: Ziwei Luo 
+Contribution: task 2, task 3 and task 4
 
 Name:
 Contribution:
 
-Name (if applicable):
-Contribution:
 
 Design notes
 ------------
