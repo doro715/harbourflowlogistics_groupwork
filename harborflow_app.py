@@ -172,7 +172,6 @@ def print_labels(cleaned_labels):
         print(f"Total unique parcels: {len(cleaned_labels)}")
 
 #task 6 classify service performance
-<<<<<<< HEAD
 def get_number(message):
     while True:
         try:
@@ -184,8 +183,6 @@ def get_number(message):
         except ValueError:
             print("Invalid input! Please enter a whole number.")
 
-=======
->>>>>>> c32a406dfbb512d4cbd335b7d3731079ea290b13
 def classify_service_performance(promised_time, actual_time, damaged_parcels):
     """Task 6"""
     delay = actual_time - promised_time
