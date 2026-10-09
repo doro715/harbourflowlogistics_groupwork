@@ -1,14 +1,4 @@
-"""HarborFlow Assignment 1 starter file.
-
-Replace the TODO sections with your team's implementation. Keep the program
-entry point so the file can be run with: python harborflow_app.py
-"""
-
-
 def main():
-  """Run the HarborFlow Dispatch Console."""
-  # TODO: implement the persistent menu and dispatch to task functions.
-
   menychoice = "0"
   van_capacity_str = "0"
   van_capacity_int = 0
@@ -33,14 +23,22 @@ def main():
       print("Console closed. Dispatch data remains safe.")
       break
     elif menychoice == "2":
-      """Task 2"""
+      #task 2: validate a booking reference
+      reference = input("Enter booking reference: ")
+      print(validate_ref(reference))
     elif menychoice == "3":
-      """Task 3"""
+      #task 3: calculate a delivery quote
+      weight = float(input("Enter weight (kg): "))
+      distance = float(input("Enter distance (km): "))
+      service_code = input("Enter service code (S, X, P): ")
+      print(calculate_quote(weight, distance, service_code))
     elif menychoice == "4":
-      """Task 4"""
+      #task 4: consolidate parcel labels
+      scanned_labels = input("Enter scanned parcel labels (comma-separated): ")
+      print_labels(consolidate_labels(scanned_labels))
     elif menychoice == "5":
+      #task 5: check van capacity
       van_capacity_int = 0
-
       while van_capacity_int <= 0:
         van_capacity_str = input("Plesse enter the van capacity (kg): ")
         if van_capacity_str.isnumeric() == True:
@@ -89,8 +87,7 @@ def main():
     else:
       print("Error - Select a service from 1 to 8.")
 
-if __name__ == "__main__":
-  main()
+
 #task2: validate a booking reference
 def validate_ref(reference):
 
@@ -153,3 +150,85 @@ def print_labels(cleaned_labels):
         count += 1
         print(f"{count}. {label}")     
         print(f"Total unique parcels: {len(cleaned_labels)}")
+
+Promised_time = int(input("Enter Promised time: "))
+
+Actual_time = int(input("Enter Actual time: "))
+
+Delay = Actual_time - Promised_time
+
+Damaged_parcels= int(input("Enter Damaged parcels: "))
+
+if Damaged_parcels > 0:
+    print("SERVICE FAILURE:")
+elif Damaged_parcels <= 0:
+    Delay <= 0
+    print("ON TIME")
+elif Delay >=15:
+    print("minor delay")
+else:
+    print("major delay")
+
+#calculate the number of deliveries
+
+Deliveries = []
+for x in range(1, 8):
+    input_value = int(input(f"Enter Deliveries for Day {x}: "))
+    Deliveries.append(input_value)
+    print(Deliveries)
+total = 0
+for delivery in Deliveries:
+    total += delivery
+
+#calculate the average deliveries in a week
+average = total / 7
+print(f"Average Deliveries per Day: {average:.2f}")
+
+#calculate the highest deliveries in a day
+
+highest = Deliveries[0]
+for delivery in Deliveries:
+    if delivery > highest:
+        highest = delivery
+print(f"Highest Deliveries in a Day: {highest}")
+
+#calculate the lowest deliveries in a day
+
+lowest = Deliveries[0]
+for delivery in Deliveries:
+    if delivery < lowest:
+        lowest = delivery
+print(f"Lowest Deliveries in a Day: {lowest}")
+
+#calcualting days that met the target
+
+days_met_target = 0
+for delivery in Deliveries:
+    if delivery >= 10:
+        days_met_target += 1
+print(f"Days that Met Target: {days_met_target}")
+
+#calculate days that had high deliveries and low deliveries
+
+days =  ["monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+highest = Deliveries[0]
+highest_day = 0
+for x in range(7):
+    if Deliveries[x] > highest:
+        highest = Deliveries[x]
+        highest_day = x
+print(f"Day with Highest Deliveries: {days[highest_day]}")
+
+lowest = Deliveries[0]
+lowest_day = 0
+for x in range(7):
+    if Deliveries[x] < lowest:
+        lowest = Deliveries[x]
+        lowest_day = x
+print(f"Day with Lowest Deliveries: {days[lowest_day]}")
+
+
+
+if __name__ == "__main__":
+  main()
