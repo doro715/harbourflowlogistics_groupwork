@@ -45,8 +45,7 @@ def main():
       distance = float(input("Enter distance (km): "))
       service_code = input("Enter service code (S, X, P): ")
       quote = calculate_quote(weight, distance, service_code)
-      print(f"Delivery quote: {quote:.2f} SEK")
-  
+      print(f"Delivery quote: {quote:.2f} SEK") 
     elif menychoice == "4":
       #task 4: consolidate parcel labels
       scanned_labels = input("Enter scanned parcel labels (hyphen-separated): ")
@@ -96,10 +95,19 @@ def main():
       parcel_weights_list.clear()
     elif menychoice == "6":
       """Task 6"""
+      promised_time = int(input("Enter promised minutes: "))
+      actual_time = int(input("Enter actual minutes: "))
+      damaged_parcels = int(input("Enter number of damaged parcels: "))
+      delay = actual_time - promised_time
+      print(f"Delay: {delay} minutes")
+      classify_service_performance(promised_time, actual_time, damaged_parcels)
+
     elif menychoice == "7":
       """Task 7"""
+      weekly_report()
     elif menychoice == "8":
       """Task 8"""
+      pass
     else:
       print("Error - Select a service from 1 to 8.")
 
@@ -164,24 +172,88 @@ def print_labels(cleaned_labels):
         print(f"Total unique parcels: {len(cleaned_labels)}")
 
 #task 6 classify service performance
-def classify_service_performance():
+def get_number(message):
+    while True:
+        try:
+            number = int(input(message))
+            if number < 0:
+                print("Please enter a positive number or zero.")
+            else:
+                return number
+        except ValueError:
+            print("Invalid input! Please enter a whole number.")
+
+def classify_service_performance(promised_time, actual_time, damaged_parcels):
     """Task 6"""
-    promised_time = int(input("Enter Promised time: "))
-    actual_time = int(input("Enter Actual time: "))
-    damaged_parcels = int(input("Enter number of damaged parcels: "))
     delay = actual_time - promised_time
     if damaged_parcels > 0:
-        print("SERVICE FAILURE")
+        print(f"Service Status: SERVICE FAILURE")
     elif delay <= 0:
-        print("ON TIME")
+        print("Service Status: ON TIME")
     elif delay < 15:
-        print("MINOR DELAY")
+        print("Service Status: MINOR DELAY")
     else:
-        print("MAJOR DELAY")
+        print("Service Status: MAJOR DELAY")
 
 #task 7 produce weekly dispatch report
-def produce_weekly_dispatch_report():
+def weekly_report():
     """Task 7"""
+    deliveries = []
+    days = [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    ]
+
+    # Collect deliveries for seven days
+    for x in range(7):
+        input_value = get_number(
+            f"Enter deliveries for {days[x]}: "
+        )
+        deliveries.append(input_value)
+
+    # Calculate total deliveries
+    total = 0
+    for delivery in deliveries:
+        total += delivery
+
+    print(f"\nTotal deliveries: {total}")
+
+    # Calculate average deliveries
+    average = total / 7
+    print(f"Average deliveries per day: {average:.2f}")
+
+    # Find the highest number of deliveries
+    highest = deliveries[0]
+    highest_day = 0
+
+    for x in range(7):
+        if deliveries[x] >= highest:
+            highest = deliveries[x]
+            highest_day = x
+
+    print(f"Highest deliveries in a day: {highest}")
+    print(f"Day with highest deliveries: {days[highest_day]}")
+
+    # Find the lowest number of deliveries
+    lowest = deliveries[0]
+    lowest_day = 0
+
+    for x in range(7):
+        if deliveries[x] <= lowest:
+            lowest = deliveries[x]
+            lowest_day = x
+
+    print(f"Lowest deliveries in a day: {lowest}")
+    print(f"Day with lowest deliveries: {days[lowest_day]}")
+
+    # Count days that met the target
+    days_met_target = 0
+
+    for delivery in deliveries:
+        if delivery >= 10:
+            days_met_target += 1
+
+    print(f"Days that met target: {days_met_target}")
 
 if __name__ == "__main__":
   main()
