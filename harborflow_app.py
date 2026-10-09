@@ -164,17 +164,26 @@ def print_labels(cleaned_labels):
         print(f"Total unique parcels: {len(cleaned_labels)}")
 
 #task 6 classify service performance
-def classify_service_performance(promised_time, actual_time, damaged_parcels):
-    """Task 6"""
-    promised_time = int(input("Enter Promised time: "))
-    actual_time = int(input("Enter Actual time: "))
-    damaged_parcels = int(input("Enter number of damaged parcels: "))
+# Function to get a valid number
+def get_number(message):
+    while True:
+        try:
+            number = int(input(message))
+            if number < 0:
+                print("Please enter a positive number or zero.")
+            else:
+                return number
+        except ValueError:
+            print("Invalid input! Please enter a whole number.")
+# Function to classify service performance
+def classify_service(promised_time, actual_time, damaged_parcels):
     delay = actual_time - promised_time
+
     if damaged_parcels > 0:
         print("SERVICE FAILURE")
     elif delay <= 0:
         print("ON TIME")
-    elif delay < 15:
+    elif delay <= 15:
         print("MINOR DELAY")
     else:
         print("MAJOR DELAY")
@@ -182,6 +191,103 @@ def classify_service_performance(promised_time, actual_time, damaged_parcels):
 #task 7 produce weekly dispatch report
 def produce_weekly_dispatch_report():
     """Task 7"""
+# Function to classify service performance
+def classify_service(promised_time, actual_time, damaged_parcels):
+    delay = actual_time - promised_time
+
+    if damaged_parcels > 0:
+        print("SERVICE FAILURE")
+    elif delay <= 0:
+        print("ON TIME")
+    elif delay <= 15:
+        print("MINOR DELAY")
+    else:
+        print("MAJOR DELAY")
+
+
+# Function to calculate the weekly delivery report
+def weekly_report():
+    deliveries = []
+    days = [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    ]
+
+    # Collect deliveries for seven days
+    for x in range(7):
+        input_value = get_number(
+            f"Enter deliveries for {days[x]}: "
+        )
+        deliveries.append(input_value)
+
+    # Calculate total deliveries
+    total = 0
+    for delivery in deliveries:
+        total += delivery
+
+    print(f"\nTotal deliveries: {total}")
+
+    # Calculate average deliveries
+    average = total / 7
+    print(f"Average deliveries per day: {average:.2f}")
+
+    # Find the highest number of deliveries
+    highest = deliveries[0]
+    highest_day = 0
+
+    for x in range(7):
+        if deliveries[x] >= highest:
+            highest = deliveries[x]
+            highest_day = x
+
+    print(f"Highest deliveries in a day: {highest}")
+    print(f"Day with highest deliveries: {days[highest_day]}")
+
+    # Find the lowest number of deliveries
+    lowest = deliveries[0]
+    lowest_day = 0
+
+    for x in range(7):
+        if deliveries[x] <= lowest:
+            lowest = deliveries[x]
+            lowest_day = x
+
+    print(f"Lowest deliveries in a day: {lowest}")
+    print(f"Day with lowest deliveries: {days[lowest_day]}")
+
+    # Count days that met the target
+    days_met_target = 0
+
+    for delivery in deliveries:
+        if delivery >= 10:
+            days_met_target += 1
+
+    print(f"Days that met target: {days_met_target}")
+
+
+# Main program
+def main():
+    print("1. Classify service performance")
+    print("2. Weekly delivery report")
+
+    choice = input("Choose an option (1 or 2): ")
+
+    if choice == "1":
+        promised_time = get_number("Enter promised time: ")
+        actual_time = get_number("Enter actual time: ")
+        damaged_parcels = get_number("Enter damaged parcels: ")
+
+        classify_service(
+            promised_time,
+            actual_time,
+            damaged_parcels
+        )
+
+    elif choice == "2":
+        weekly_report()
+
+    else:
+        print("Invalid choice!")
 
 if __name__ == "__main__":
   main()
