@@ -163,5 +163,25 @@ def print_labels(cleaned_labels):
         print(f"{count}. {label}")     
         print(f"Total unique parcels: {len(cleaned_labels)}")
 
+#task 6 classify service performance
+def classify_service_performance():
+    """Task 6"""
+    promised_time = int(input("Enter Promised time: "))
+    actual_time = int(input("Enter Actual time: "))
+    damaged_parcels = int(input("Enter number of damaged parcels: "))
+    delay = actual_time - promised_time
+    if damaged_parcels > 0:
+        print("SERVICE FAILURE")
+    elif delay <= 0:
+        print("ON TIME")
+    elif delay < 15:
+        print("MINOR DELAY")
+    else:
+        print("MAJOR DELAY")
+
+#task 7 produce weekly dispatch report
+def produce_weekly_dispatch_report():
+    """Task 7"""
+
 if __name__ == "__main__":
   main()
