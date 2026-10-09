@@ -164,7 +164,7 @@ def print_labels(cleaned_labels):
         print(f"Total unique parcels: {len(cleaned_labels)}")
 
 #task 6 classify service performance
-def classify_service_performance():
+def classify_service_performance(promised_time, actual_time, damaged_parcels):
     """Task 6"""
     promised_time = int(input("Enter Promised time: "))
     actual_time = int(input("Enter Actual time: "))
