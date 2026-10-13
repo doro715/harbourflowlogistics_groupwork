@@ -1,12 +1,14 @@
+#Business calculation variables 
+BASE_CHARGE_SEK = 45.00
+WEIGHT_RATE_SEK_PER_KG = 4.00
+DISTANCE_RATE_SEK_PER_KM = 6.50
+STANDARD_MULTIPLIER = 1.00
+EXPRESS_MULTIPLIER = 1.25
+PRIORITY_MULTIPLIER = 1.60
+
 def main():
   menychoice = "0"
-  van_capacity_str = "0"
-  van_capacity_int = 0
-  remaining_capacity = 0
-  parcel_weight_str = "0"
-  parcel_weights_list = []
-  accepted_parcels = 0
-
+  
   print("HARBORFLOW DISPATCH CONSOLE")
   print("1. Close console")
   print("2. Validate booking reference")
@@ -15,6 +17,7 @@ def main():
   print("5. Check van capacity")
   print("6. Classify service performance")
   print("7. Produce weekly dispatch report")
+  print("8. Compare Service Scenarios")
 
   while menychoice != "1":
     menychoice = input("Select service: ")
@@ -51,9 +54,14 @@ def main():
       scanned_labels = input("Enter scanned parcel labels (hyphen-separated): ")
       cleaned_labels = consolidate_labels(scanned_labels)
       print_labels(cleaned_labels)
-    elif menychoice == "5":
+    elif menychoice == "5": 
       #task 5: check van capacity
+      van_capacity_str = "0"
       van_capacity_int = 0
+      remaining_capacity = 0
+      parcel_weight_str = "0"
+      parcel_weights_list = []
+      accepted_parcels = 0
       while van_capacity_int <= 0:
         van_capacity_str = input("Please enter the van capacity (kg): ")
         if van_capacity_str.isnumeric() == True:
@@ -107,10 +115,11 @@ def main():
       weekly_report()
     elif menychoice == "8":
       """Task 8"""
-      pass
+      distance = float(input("Enter distance(km): "))
+      weight = float (input("Enter weight(kg):"))
+      compare_scenarios(distance,weight)
     else:
       print("Error - Select a service from 1 to 8.")
-
 
 #task2: validate a booking reference
 def validate_ref(reference):
@@ -127,33 +136,30 @@ def validate_ref(reference):
     if len(customer_code) != 3 or not customer_code.isalpha():
         return ""
     if len(shipment_number) != 4 or not shipment_number.isdigit():
-        return ""
-    
+        return ""    
     return result_cleaned
+
 #task3: calculate a delivery quote
 def calculate_quote(weight, distance, service_code):
     if weight <= 0 or distance <= 0:
         return "Error - Weight and distance must be positive numbers."
     if service_code == "S" or service_code == "Standard":
-        service_multiplier = 1.00
+        service_multiplier = STANDARD_MULTIPLIER
     elif service_code == "X" or service_code == "Express":
-        service_multiplier = 1.25
+        service_multiplier = EXPRESS_MULTIPLIER
     elif service_code == "P" or service_code == "Priority":
-        service_multiplier = 1.60
+        service_multiplier = PRIORITY_MULTIPLIER
     else:
         return "Error - Invalid service code. Please choose 'S', 'X', or 'P' or 'Standard', 'Express', or 'Priority'."
-    base_charge = 45.00
-    weight_rate = 4.50 * weight
-    distance_rate = 6.50 * distance
-
-    delivery_quote = base_charge + weight_rate + distance_rate
+    weight_rate = WEIGHT_RATE_SEK_PER_KG * weight
+    distance_rate = DISTANCE_RATE_SEK_PER_KM * distance
+    delivery_quote = BASE_CHARGE_SEK + weight_rate + distance_rate
     service_quote = delivery_quote * service_multiplier
     print(f"Distance(km): {distance}")
     print(f"Weight(kg): {weight}")
     print(f"Service code: {service_code}")
-
     return service_quote
-    
+  
 #task 4 consolidate parcel labels
 def consolidate_labels(scanned_labels):
     raw_labels = scanned_labels.split(",")
@@ -254,6 +260,36 @@ def weekly_report():
             days_met_target += 1
 
     print(f"Days that met target: {days_met_target}")
+
+#task 9 compare service scenarios
+def compare_scenarios(distance,weight):
+   print("Compare service scenarios for customers:")
+   print(f"Distance (km): {distance}")
+   print(f"Weight (kg): {weight}")
+   print(f"Service Comparison")
+   rate = BASE_CHARGE_SEK + WEIGHT_RATE_SEK_PER_KG * weight + DISTANCE_RATE_SEK_PER_KM * distance
+   standard_quote = STANDARD_MULTIPLIER * rate
+   express_quote = EXPRESS_MULTIPLIER * rate
+   priority_quote = PRIORITY_MULTIPLIER * rate
+   print(f"Standard: {standard_quote:.2f} SEK")
+   print(f"Express: {express_quote:.2f} SEK")
+   print(f"Priority:{priority_quote:.2f} SEK")
+   
+   if standard_quote <= express_quote and standard_quote <= priority_quote:
+      cheapest_service = "Standard"
+   elif express_quote <= priority_quote and express_quote <= standard_quote:
+      cheapest_service = "Express"
+   else: cheapest_service = "Priority"
+   print(f"Cheapest service: {cheapest_service}")
+
+   if standard_quote >= express_quote and standard_quote >= priority_quote:
+      most_expensive_service = "Standard"
+   elif express_quote >= priority_quote and express_quote >= standard_quote:
+      most_expensive_service = "Express"
+   else: most_expensive_service = "Priority"
+   print(f"Most expensive Service: {most_expensive_service}")
+
+
 
 if __name__ == "__main__":
   main()
