@@ -15,6 +15,7 @@ def main():
   print("5. Check van capacity")
   print("6. Classify service performance")
   print("7. Produce weekly dispatch report")
+  print("8. Compare service scenarios")
 
   while menychoice != "1":
     menychoice = input("Select service: ")
