@@ -133,7 +133,7 @@ def validate_ref(reference):
 #task3: calculate a delivery quote
 def calculate_quote(weight, distance, service_code):
     if weight <= 0 or distance <= 0:
-        return "Weight and distance must be positive numbers."
+        return "Error - Weight and distance must be positive numbers."
     if service_code == "S" or service_code == "Standard":
         service_multiplier = 1.00
     elif service_code == "X" or service_code == "Express":
@@ -141,7 +141,7 @@ def calculate_quote(weight, distance, service_code):
     elif service_code == "P" or service_code == "Priority":
         service_multiplier = 1.60
     else:
-        return "Invalid service code. Please choose 'S', 'X', or 'P' or 'Standard', 'Express', or 'Priority'."
+        return "Error - Invalid service code. Please choose 'S', 'X', or 'P' or 'Standard', 'Express', or 'Priority'."
     base_charge = 45.00
     weight_rate = 4.50 * weight
     distance_rate = 6.50 * distance
