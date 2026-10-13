@@ -288,7 +288,5 @@ def compare_scenarios(distance,weight):
    else: most_expensive_service = "Priority"
    print(f"Most expensive Service: {most_expensive_service}")
 
-
-
 if __name__ == "__main__":
   main()
